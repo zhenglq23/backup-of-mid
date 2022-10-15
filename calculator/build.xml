@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="HelloWorld" default="run" basedir=".">
 	<target name="clean">
-        <delete dir="bin"/>
+        <delete dir="src/jtest1"/>
         </target>
 
 	<target name="compile" depends="clean">
-	<mkdir dir="bin"/>
-	<javac srcdir="src" destdir="bin" />
+	<mkdir dir="src/jtest1"/>
+	<javac srcdir="src" destdir="src" >
+		<classpath>
+		<pathelement path="./src/:Desktop/junit/"/>					
+		</classpath>
+	</javac>
 	</target>
 
 	<target name="run" depends="compile">
-        	<java classname="HelloWorld">        	
+        	<java classname="jtest1.HelloWorld"> 
         	<classpath>
-		<pathelement path="bin"/>					
+		<pathelement path="src"/>					
 		</classpath>								
-		</java>	     
+		</java>	  
 	</target>
 	
 	
