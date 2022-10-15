@@ -1,5 +1,6 @@
 import javax.swing.*;
- 
+import javax.swing.JLabel; 
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -61,6 +62,30 @@ public class Gui{
         	JButton okBut = new JButton("OK");
         	okBut.setBounds(400, 100, 100, 100);
         	panel.add(okBut);
+        	
+        	// click to change op
+        	addBut.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) { 
+		op.setText("+");}
+		});
+        	subBut.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) { 
+		op.setText("-");}
+		});
+		mulBut.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) { 
+		op.setText("*");}
+		});
+		divBut.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) { 
+		op.setText("/");}
+		});
+		// click OK to calculate the result
+		okBut.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) { 
+		op.setText("OK");}
+		});
+		
 	}
  }
  
