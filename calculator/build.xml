@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="helloWorld" default="run" basedir=".">
+	<target name="clean">
+        <delete dir="bin"/>
+        </target>
+
+	<target name="compile" depends="clean">
+	<mkdir dir="bin"/>
+	<javac srcdir="src" destdir="bin" />
+	</target>
+
+	<target name="run" depends="compile">
+        	<java classname="helloWorld">        	
+        	<classpath>
+		<pathelement path="bin"/>					
+		</classpath>								
+		</java>	     
+	</target>
+	
+	
+</project>
