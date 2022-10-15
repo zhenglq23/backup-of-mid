@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="helloWorld" default="run" basedir=".">
+<project name="HelloWorld" default="run" basedir=".">
 	<target name="clean">
         <delete dir="bin"/>
         </target>
@@ -10,7 +10,7 @@
 	</target>
 
 	<target name="run" depends="compile">
-        	<java classname="helloWorld">        	
+        	<java classname="HelloWorld">        	
         	<classpath>
 		<pathelement path="bin"/>					
 		</classpath>								
