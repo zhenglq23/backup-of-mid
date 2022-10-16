@@ -26,7 +26,6 @@ public class Gui{
 	}
 	
 	private static void placeComponents(JPanel panel) {
-		char mode = "+";
 		panel.setLayout(null);
 		// create texure
 		JTextField x1 = new JTextField(10);
@@ -67,35 +66,43 @@ public class Gui{
         	// click to change op
         	addBut.addMouseListener(new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) { 
-		op.setText("+");
-		mode = "+";}
+		op.setText("+");}
 		});
         	subBut.addMouseListener(new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) { 
-		op.setText("-");
-		mode = "-";}
+		op.setText("-");}
 		});
 		mulBut.addMouseListener(new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) { 
-		op.setText("*");
-		mode = "*";}
+		op.setText("*");}
 		});
 		divBut.addMouseListener(new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) { 
-		op.setText("/");
-		mode = "/";}
+		op.setText("/");}
 		});
 		// click OK to calculate the result
 		okBut.addMouseListener(new MouseAdapter() {
 		public void mouseClicked(MouseEvent e) { 
-		int x = x1.getText();
-		int y = x2.getText();
+		int x = Integer.valueOf(x1.getText()).intValue();
+		int y = Integer.valueOf(x2.getText()).intValue();
 		int z;
-		if (mode=="+"){
+		if (op.getText()=="+"){
 			z=x+y;
-			re.setT
+			re.setText(String.valueOf(z));
+			}
+		else if (op.getText()=="-"){
+			z=x-y;
+			re.setText(String.valueOf(z));
+			}
+		else if(op.getText()=="*"){
+			z=x*y;
+			re.setText(String.valueOf(z));
+			}
+		else if(op.getText()=="/" && y!=0){
+			z=x/y;
+			re.setText(String.valueOf(z));
+			}
 		}
-		
 		});
 		
 		
