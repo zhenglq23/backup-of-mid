@@ -8,7 +8,7 @@
 	<mkdir dir="src/jtest1"/>
 	<javac srcdir="src" destdir="src" >
 		<classpath>
-		<pathelement path="./src/:Desktop/junit/"/>					
+		<pathelement path="./src/:~/Desktop/junit/"/>					
 		</classpath>
 	</javac>
 	</target>
@@ -18,7 +18,8 @@
         	<classpath>
 		<pathelement path="src"/>					
 		</classpath>								
-		</java>	  
+		</java>
+		  
 	</target>
 	
 	
