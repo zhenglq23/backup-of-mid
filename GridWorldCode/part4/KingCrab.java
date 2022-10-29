@@ -28,32 +28,24 @@ import java.util.ArrayList;
  * <br />
  * This class is not tested on the AP CS A and AB exams.
  */
-public class QuickCrab extends CrabCritter
+public class KingCrab extends CrabCritter
 {
-    
-    /**
-     * @return list of empty locations 2 steps to the right and to the left
-     */
-    public ArrayList<Location> getMoveLocations()
+    public void processActors(ArrayList<Actor> actors)
     {
-        ArrayList<Location> locs = new ArrayList<Location>();
-        ArrayList<Location> locs2 = new ArrayList<Location>();
-        Location l = getLocation();
-        Location loc2;
-        Grid<Actor> g = getGrid();
-        int[] dirs =
-            { Location.LEFT, Location.RIGHT };
-        for (Location loc : getLocationsInDirections(dirs)){
-            loc2 = new Location(loc.getRow()*2-l.getRow(),loc.getCol()*2-l.getCol());
-            if (getGrid().get(loc) == null){
-                locs.add(loc);
-                if (g.isValid(loc2) && getGrid().get(loc2) == null)
-                    locs2.add(loc2);
-            }
+    	Location loc = getLocation();
+    	Location src;
+    	Location dst;
+    	Grid<Actor> g = getGrid();
+        for (Actor a : actors)
+        {
+            src = a.getLocation();
+            dst = new Location(src.getRow()*2-loc.getRow(),src.getCol()*2-loc.getCol());
+            if ((a instanceof Actor)){
+                if(g.isValid(dst))
+                    a.moveTo(dst);
+                else
+                    a.removeSelfFromGrid();
+            }                 
         }
-        if (locs2.isEmpty())
-            return locs;
-        return locs2;
     }
-    
 }
