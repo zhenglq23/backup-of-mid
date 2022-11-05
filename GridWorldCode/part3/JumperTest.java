@@ -10,69 +10,52 @@ import info.gridworld.grid.*;
 
 public class JumperTest extends TestCase
 {
-    private Grid<Actor> g;
-    private Jumper j1;
-    private Jumper j2;
+    private Grid<Actor> g=new BoundedGrid(9,9);
+    private Jumper j1=new Jumper();
+    private Jumper j2=new Jumper();
+    private Rock r = new Rock();
+    private Flower f = new Flower();
     
     public void testNormalMove()
     {
-        g = new BoundedGrid(9,9);
-    	j1 = new Jumper();
-    	j1.putSelfInGrid(g,new Location(0,0)); // put into Grid
-    	j1.setDirection(180); // to south
+    	j1.putSelfInGrid(g,new Location(4,4)); // put into Grid, default to north
     	j1.act(); // act
-    	assertTrue(j1.getLocation().equals(new Location(2,0))); // test Location
-    	assertEquals(j1.getDirection(), 180); // test Direction
+    	assertTrue(j1.getLocation().equals(new Location(2,4))&&(j1.getDirection()==0)); // test Location and Direction
     }
 
     public void testJumpOverObject()
     {
-        g = new BoundedGrid(9,9);
-    	j1 = new Jumper();
     	// jump across Rock
-    	j1.putSelfInGrid(g,new Location(0,0)); // put Jumper into Grid
-    	j1.setDirection(180); // to south
-    	Rock r = new Rock();
-    	r.putSelfInGrid(g,new Location(1,0)); // put Rock into Grid
+    	j1.putSelfInGrid(g,new Location(5,5)); // put Jumper into Grid, default to north
+    	r.putSelfInGrid(g,new Location(4,5)); // put Rock into Grid
     	j1.act();
-    	assertTrue(j1.getLocation().equals(new Location(2,0))); //test Location
-    	assertEquals(j1.getDirection(), 180); // test Direction
-    	
+    	assertTrue(j1.getLocation().equals(new Location(3,5))); //test Location
+    	assertEquals(j1.getDirection(), 0); // test Direction
     	// jump across Flower
-    	j1.moveTo(new Location(3,0)); // move Jumper
-    	Flower f = new Flower();
-    	f.putSelfInGrid(g,new Location(4,0)); // put flower into Grid
+    	f.putSelfInGrid(g,new Location(2,5)); // put flower into Grid
     	j1.act();
-    	assertTrue(j1.getLocation().equals(new Location(5,0))); //test Location
-    	assertEquals(j1.getDirection(), 180); // test Direction
+    	assertTrue(j1.getLocation().equals(new Location(1,5))); //test Location
+    	assertEquals(j1.getDirection(), 0); // test Direction
     }
 
     public void testStopByObject()
     {
-        g = new BoundedGrid(9,9);
-    	j1 = new Jumper();
     	// Stop across Rock
-    	j1.putSelfInGrid(g,new Location(0,0)); // put Jumper into Grid
-    	j1.setDirection(180); // to south
-    	Rock r = new Rock();
-    	r.putSelfInGrid(g,new Location(2,0)); // put Rock into Grid
+    	j1.putSelfInGrid(g,new Location(3,3)); // put Jumper into Grid, default to north
+    	r.putSelfInGrid(g,new Location(1,3)); // put Rock into Grid
     	j1.act();
-    	assertTrue(j1.getLocation().equals(new Location(0,0))); //test Location
-    	assertEquals(j1.getDirection(), 225); // test Direction
+    	assertTrue(j1.getLocation().equals(new Location(3,3))); //test Location
+    	assertEquals(j1.getDirection(), 45); // test Direction
     	
     	// Stop across Flower
-    	j1.moveTo(new Location(0,4)); // move Jumper
-    	Flower f = new Flower();
-    	f.putSelfInGrid(g,new Location(2,2)); // put flower into Grid
+    	f.putSelfInGrid(g,new Location(1,5)); // put flower into Grid
     	j1.act();
-    	assertTrue(j1.getLocation().equals(new Location(0,4))); //test Locaion
-    	assertEquals(j1.getDirection(), 270); // test Direction
+    	assertTrue(j1.getLocation().equals(new Location(3,3))); //test Locaion
+    	assertEquals(j1.getDirection(), 90); // test Direction
     }
     
     public void testStopByEdge()
     {
-        g = new BoundedGrid(9,9);
-    	j1 = new Jumper();
     	j1.putSelfInGrid(g,new Location(7,0)); // put Jumper into Grid
     	j1.setDirection(180); // to south
     	j1.act();
@@ -87,8 +70,6 @@ public class JumperTest extends TestCase
     
     public void testMeetJumper()
     {
-        g = new BoundedGrid(9,9);
-    	j1 = new Jumper();
     	j1.putSelfInGrid(g,new Location(0,0)); // put Jumper1 into Grid
     	j1.setDirection(180); // set Jumper1 to the south
     	j2 = new Jumper();

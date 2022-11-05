@@ -10,7 +10,7 @@ public class SparseBoundedGrid extends AbstractGrid<Actor>
 {
     private int row;
     private int col;
-    private Map<Location, Actor> aMap;
+    private Map<Location, Actor> aMap; // use HashMap
     
     public SparseBoundedGrid(int rows, int cols)
     {
@@ -20,7 +20,7 @@ public class SparseBoundedGrid extends AbstractGrid<Actor>
             throw new IllegalArgumentException("cols <= 0");
         row = rows;
         col = cols;
-        aMap = new HashMap<Location, Actor>();
+        aMap = new HashMap<Location, Actor>(); // initialize
     }
     
     public int getNumRows()
@@ -42,40 +42,40 @@ public class SparseBoundedGrid extends AbstractGrid<Actor>
     public ArrayList<Location> getOccupiedLocations()
     {
     	ArrayList<Location> a = new ArrayList<Location>();
-    	for (Location loc : aMap.keySet())
+    	for (Location loc : aMap.keySet()) // return all actors that are in the HashMap
             a.add(loc);
         return a;
     }
     
     public Actor get(Location loc)
     {
-        if (!isValid(loc))
+        if (!isValid(loc)) // out of the grid
             throw new IllegalArgumentException("Location " + loc
                     + " is not valid");
-        if (loc == null)
+        if (loc == null) // null Location is not permitted
             throw new NullPointerException("loc == null");
         return aMap.get(loc);
     }
     
     public Actor put(Location loc, Actor obj)
     {
-        if (!isValid(loc))
+        if (!isValid(loc)) // out of the grid
             throw new IllegalArgumentException("Location " + loc
                     + " is not valid");
-        if (loc == null)
+        if (loc == null) // null Location is not permitted
             throw new NullPointerException("loc == null");
-        if (obj == null)
+        if (obj == null) 
             throw new NullPointerException("obj == null");
         return aMap.put(loc, obj);
     }
     
     public Actor remove(Location loc)
     {
-        if (!isValid(loc))
+        if (!isValid(loc)) // out of the grid
             throw new IllegalArgumentException("Location " + loc
                     + " is not valid");
         
-        if (loc == null)
+        if (loc == null) // null Location is not permitted
             throw new NullPointerException("loc == null");
         return aMap.remove(loc);
     }

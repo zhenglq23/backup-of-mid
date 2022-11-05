@@ -10,22 +10,22 @@ public class UnboundedGrid2 extends AbstractGrid<Actor>
     private Actor[][] arr;
     
     public UnboundedGrid2(){
-    	arr = new Actor[16][16];
+    	arr = new Actor[16][16]; // initialize a 16*16 array
     }
     
     public int getNumRows()
     {
-        return arr.length;
+        return arr.length; // get row
     }
 
     public int getNumCols()
     {
-        return arr[0].length;
+        return arr[0].length; // get col
     }
     
     public boolean isValid(Location loc)
     {
-        return 0 <= loc.getRow() && 0 <= loc.getCol();
+        return 0 <= loc.getRow() && 0 <= loc.getCol(); // unbounded
     }
     
     public ArrayList<Location> getOccupiedLocations()
@@ -50,7 +50,7 @@ public class UnboundedGrid2 extends AbstractGrid<Actor>
         if (!isValid(loc))
             throw new IllegalArgumentException("Location " + loc
                     + " is not valid");
-        if(loc.getRow()>=getNumRows()||loc.getCol()>=getNumRows())
+        if(loc.getRow()>=getNumRows()||loc.getCol()>=getNumRows()) // out of the range of array, so it has nothing there
             return null;
         return arr[loc.getRow()][loc.getCol()];
     }
@@ -62,7 +62,7 @@ public class UnboundedGrid2 extends AbstractGrid<Actor>
                     + " is not valid");
         if (obj == null)
             throw new NullPointerException("obj == null");
-	while(loc.getRow()>=getNumRows()||loc.getCol()>=getNumRows())
+	while(loc.getRow()>=getNumRows()||loc.getCol()>=getNumRows()) // that Location out of the range of array, so resize it to its double size
 	    resize();
         // Add the object to the grid.
         Actor oldOccupant = get(loc);
@@ -88,10 +88,10 @@ public class UnboundedGrid2 extends AbstractGrid<Actor>
     {
         Actor[][] new_arr=new Actor[2*getNumRows()][];    
     	for (int i=0; i<getNumRows(); i++){
-    	    new_arr[i] = Arrays.copyOf(arr[i],2*arr[i].length);
+    	    new_arr[i] = Arrays.copyOf(arr[i],2*arr[i].length); // copy the data exists and resize cols
     	}
-    	for (int j=getNumRows(); j<2*getNumRows(); j++){
-    	    new_arr[j] = new Actor[2*getNumRows()];
+    	for (int j=getNumRows(); j<2*getNumRows(); j++){ 
+    	    new_arr[j] = new Actor[2*getNumRows()]; // add new rows
     	}
     	arr = new_arr;
     }
