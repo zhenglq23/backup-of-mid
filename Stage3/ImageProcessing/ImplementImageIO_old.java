@@ -37,8 +37,6 @@ public class ImplementImageIO implements IImageIO
         { 
             e.printStackTrace(); 
  	}
- 	//int offset=(int)header[13]<<24+(int)header[12]<<16+(int)header[11]<<8+(int)header[10];
- 	
         /* 保存位图信息
          * 字节 #14-17    定义以下用来描述影像的区块（BitmapInfoHeader）的大小。
          * 字节 #18-21    保存位图宽度（以像素个数表示）。
@@ -69,23 +67,16 @@ public class ImplementImageIO implements IImageIO
         { 
             e.printStackTrace(); 
  	}
-	
-	/*int width = ((int)info[7]<< 24)|((int)info[6]<< 16)|((int)info[5]<< 8)|(int)info[4];
-  	int height = ((int)info[11]<< 24) |((int)info[10]<< 16) |((int)info[9]<< 8) |(int)info[8];
-	int imageSize = ((int)info[23]<< 24)|((int)info[22]<< 16)|((int)info[21]<< 8)|(int)info[20];*/
-	
-	int width = ((int)info[7]<< 24)+((int)info[6]<< 16)+((int)info[5]<< 8)+(int)info[4];
-  	int height = ((int)info[11]<< 24) +((int)info[10]<< 16) +((int)info[9]<< 8) +(int)info[8];
-	int imageSize = ((int)info[23]<< 24)+((int)info[22]<< 16)+((int)info[21]<< 8)+(int)info[20];
-	
-	System.out.println(imageSize);
+        int width = ((int)info[7]<< 24)  | ((int)info[6]<< 16)  | ((int)info[5]<< 8) | (int)info[4];
+  	int height = ((int)info[11]<< 24)  | ((int)info[10]<< 16)  | ((int)info[9]<< 8) | (int)info[8];
+  	//bitCount = ((int)info[14]<<8 | (int)info[15]);
+	int imageSize = ((int)info[23]<< 24)  | ((int)info[22]<< 16)  | ((int)info[21]<< 8) | (int)info[20];
 	
   	// construct image array
   	// if not a multiple of 4, then pad it
-  	//int padCount = ((imageSize / height) - width * 3)%4;
-  	int padCount = imageSize/height%4;
-  	
-  	System.out.println(padCount);
+  	int padCount = (imageSize / height) - width * 3;
+  	if(padCount==4)
+  	    padCount=0;
   	int pic[] = new int[imageSize];
   	byte barr[] = new byte[imageSize];
   	try{
@@ -100,13 +91,10 @@ public class ImplementImageIO implements IImageIO
   	{
   	    for(int j=0; j<width; j++)
   	    {
-		// data from down to up and from left to right  	    
-  	    	//pic[width*(height-i-1)+j] = ((255&0xff) << 24)|((int)(barr[index+2]&0xff) << 16)|((int)(barr[index+1]&0xff)<< 8)|(int)(barr[index]&0xff); 
-  	    	//pic[width*(height-i-1)+j] = (255<< 24)|((int)barr[index+2]<< 16)|((int)barr[index+1]<< 8)|(int)barr[index]; 
-		pic[width * (height - i - 1) + j] =  (255 & 0xff) << 24  | (((int)barr[index + 2] & 0xff) << 16)| (((int)barr[index + 1] & 0xff) << 8)| (int)barr[index] & 0xff; 
+  	    	pic[width*(height-i-1)+j] = (255<< 24) | ((int)barr[index+2] << 16) | ((int)barr[index+1]<< 8) |(int)barr[index];  
 		index += 3;
   	    }
-  	    index+=padCount;
+  	    index += padCount;
   	}
   	Image im = null;
   	im = Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(width, height,pic, 0, width));
@@ -124,8 +112,10 @@ public class ImplementImageIO implements IImageIO
     {
     	try  
         {  
-            File file = new File(filepath+".bmp");
-            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+            File file = new File(filepath + ".bmp");
+            BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), 
+                                                    image.getHeight(null), 
+                                                    BufferedImage.TYPE_INT_RGB);
             Graphics graphics = bufferedImage.getGraphics();
             graphics.drawImage(image, 0, 0, null); 
             graphics.dispose();
